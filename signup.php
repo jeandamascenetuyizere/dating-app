@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login form</title>
-    <link rel="stylesheet" href="./font/fontawesome-free-5.15.4-desktop/fontawesome-free-6.1.2-web/css/all.css">
+    <title>Sign up form</title>
     <link rel="stylesheet" href="./CSS/style.css">
    
 </head>
@@ -13,21 +12,27 @@
     <div class="container">
         <div class="header">
             <nav>
-                <h1 style="color: rgb(10, 8, 8) ;">Dating<span style="color: #ed9b59;">App</span></h1>
+                <h1 style="color: rgb(10, 8, 8) ;">Dating<span style="color: #ed9b59;;">App</span></h1>
               <ul>
-                <li><a href="">Home </a></li>
+                <li><a href="about.html">About </a></li>
                 <li> <a href="contact.html">Contact</a></li> 
+                <li> <a  href="login.html">Login</a></li>  
             </ul>
              </nav>
         
         </div>
-    <form class="box" action="#" method="POST">
-        <h1>Login here</h1>
-        <input type="text" name="" placeholder=" Enter username">
-        <input type="password" name="" placeholder="Enter Password">
-        <input type="submit" name="" value="Login">
+   <div style="width: 100%; padding-top:12cm"> 
+   <form class="navsignup" action="signup.php" method="POST">
+        <h1>Sign up here</h1>
+        <input type="text" placeholder=" Enter full names" name="names" required>
+        <input type="text"  placeholder=" Enter Email" name="email" required>
+        <input type="text"  placeholder=" Enter Country" name="country">
+        <input type="text"  placeholder=" Enter City" name="city">
+        <input type="text"  placeholder=" Enter username" name="username" required>
+        <input type="password"  placeholder="Enter Password" name="password" required>
+        <input type="submit" value="Create" name="create">
     </form>
-
+</div>
 </body>
 </html>
 <?php 
