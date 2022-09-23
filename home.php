@@ -8,7 +8,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik&display=swap">
       <link rel="stylesheet" href="./font/fontawesome-free-5.15.4-desktop/fontawesome-free-6.1.2-web/css/all.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body style="background-color: #feefe3;">
     <nav>
@@ -44,46 +44,27 @@
                 </div>
             </a>
              <!----sidebar ------>
+             <form action="home.php" method="POST">
              <div class="sidebar">
                  
                 <a  class="menu-item active">
                     <span><i class="fa-solid fa-house"></i> </span><h3>Home</h3>
                     </a>
-                    <a class="menu-item">
-                    <span><i class="fa-sharp fa-solid fa-address-book"></i></span><h3>Contact</h3>
+                    <a class="menu-item" name="contact" href="contact.php">
+                    <span><i class="fa-sharp fa-solid fa-address-book" ></i></span><h3>Contact</h3>
+            
                 </a>
-                <a class="menu-item" id="notification">
-                    <span> <i class="fa-solid fa-bell">><small class="notification-count">9+</small> </i> </span><h3>Notifications</h3>
-                    <div class="notification-popup">
-                        <div>
-                            <div class="profile-photo">
-                                <img src="image/markia.jpg" >
-                                <div class="notification-body">
-                                    <b>keke benjamin</b> accepted your friend request
-                                    <small class="text-muted">2 days ago</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                          
-                                  
-                        </div>
+                <a class="menu-item" id="messages-notification" href="chatbox.php">
+                    <span><i class="fa-solid fa-envelope"></i> </span><h3>Messages</h3>
+                
                 </a>
-                <a class="menu-item" id="messages-notification">
-                    <span><i class="fa-solid fa-envelope"><small class="notification-count">6</small></i> </span><h3>Messages</h3>
-                </a>
-                <a  class="menu-item">
-                    <span><i class="fa-brands fa-hire-a-helper"></i> </span><h3>help</h3>
-                </a>
-                <!-- <a  class="menu-item" id="theme">
-                    <span><i></i> </span><h3>Theme</h3>
-                </a> -->
-                <a class="menu-item active">
-                    <span><i class="fa-solid fa-gear"></i></span><h3>Setting</h3>
-                   
-                </a>  
+               
+                <a  class="menu-item" href="index.php">
+                    <span><i class="fa-solid fa-arrow-right-from-bracket"></i> </span><h3>Logout</h3>
+                    </a>
+                     
              </div>
+             </form>
              <!------ end of sider ---->
              <label for="create-post" class="btn btn-primary">create post</label>
           </div>
@@ -124,18 +105,80 @@
                                     </div>      
                         </div>
              <!---- end of stories ------>
-             <form class="create-post">
+             <form class="create-post" method="POST" action="#">
                  <div class="profile-photo">
                      <img src="image/img11.png">
                  </div>
-                 <input type="text" placeholder="what's on your mind? jean" id="create-post">
-                 <input type="submit" value="post" class="btn btn-primary">
+                 <input type="text" placeholder="what's on your mind? jean" id="create-post" name="content" required>
+                 <input type="submit" name="submit" value ="post" class="btn btn-primary" style="width:20%;">
              </form>
+             <?php 
+
+
+$sname= "localhost";
+$unmae= "root";
+$password = "";
+
+$db_name = "dating";
+
+$conn = mysqli_connect($sname, $unmae, $password, $db_name);
+
+if (!$conn) {
+	echo "Connection failed!";
+}
+
+
+//error_reporting(0);
+
+
+if (isset($_POST['submit']))
+ {
+  
+	$content = $_POST['content'];
+
+	$sql = "INSERT INTO data ( content) VALUES ('$content')";
+    
+    if(mysqli_query($conn, $sql)){
+        echo "<script>alert('your post  is successfully posted. window:location'home.php;');</script>";
+       
+     
+    } 
+    else{
+        echo "ERROR:  Sorry $sql. ". mysqli_error($conn);
+    }
+}
+?>
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dating";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT content FROM data";
+$result = mysqli_query($conn, $sql);
+echo '<h3> your Posts:</h3>'. '<br>';
+if (mysqli_num_rows($result) > 0) {
+  // output data of each row
+  while($row = mysqli_fetch_assoc($result)) {
+  
+    echo '' . $row['content'].'<br>';
+  }
+}
+
+mysqli_close($conn);
+?>
              <!-------------- feeds -------------->
              <div class="feeds">
                           <!-------------- feeds1 -------------->
                  <div class="feed" style="width=100;height:auto;">
                      <div class="head">
+                       
                         <div class="user">
                             <div class="profile-photo">
                                 <img src="image/img17.png" >
@@ -151,24 +194,24 @@
                         <div class="photo">
                             <img src="image/img10.png" >
                         </div>
-                        <div class="action-button" >
+                        <div class="action-button" style="padding-left:16px;">
                             <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
                             <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
                                 <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
                                 <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span><a href=""></a><i class="fa-solid fa-comment"></i></span>
-                                <span><i class="fa-solid fa-share-nodes"></i></span>
+                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black;"></i></a></span>
+                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;"></i></span>
                             </div>
                             
                         </div>
                         <div class="liked-by">
-                            <span><img src="markia.jpg"></span>
-                            <span><img src="markia.jpg"></span>
-                            <span><img src="markia.jpg"></span>
+                            <span><img src="image/img17.png"></span>
+                            <span><img src="image/img15.png"></span>
+                            <span><img src="image/img16.png"></span>
                             <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
                         </div>
                         <div class="caption">
-                            <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>#lifestyle
+                            <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
                             </p>
                         </div>
                         <div class="comments text-muted">
@@ -189,18 +232,21 @@
                                </div>
                                 </div>
                            <span class="edit">
-                                   <i class="fa-solid fa-ellipsis"></i>
+                                   <i class="fa-solid fa-ellipsis"> 
+
+                                   </i>
+
                                </span>
                            <div class="photo">
                                <img src="image/img22.png" >
                            </div>
-                           <div class="action-button" >
+                           <div class="action-button" style="padding-left:16px;" >
                             <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
                             <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
                                 <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-comment"></i></span>
-                                <span><i class="fa-solid fa-share-nodes"></i></span>
+                                <span><i class="fa-solid fa-thumbs-down" style="width:15%;color:black;"></i></span>
+                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black"></i></a></span>
+                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;;"></i></span>
                             </div>
                            </div>
                            <div class="liked-by">
@@ -210,7 +256,7 @@
                                <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
                            </div>
                            <div class="caption">
-                               <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>#lifestyle
+                               <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
                                </p>
                            </div>
                            <div class="comments text-muted">
@@ -237,13 +283,13 @@
                                <div class="photo">
                                    <img src="image/img21.png" >
                                </div>
-                               <div class="action-button" >
+                               <div class="action-button" style="padding-left:16px;">
                             <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
                             <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
                                 <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
                                 <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-comment"></i></span>
-                                <span><i class="fa-solid fa-share-nodes"></i></span>
+                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black;"></i></a></span>
+                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;"></i></span>
                             </div>
                                </div>
                                <div class="liked-by">
@@ -253,7 +299,7 @@
                                    <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
                                </div>
                                <div class="caption">
-                                   <p><b>Calina</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>#lifestyle
+                                   <p><b>Calina</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
                                    </p>
                                </div>
                                <div class="comments text-muted">
@@ -279,13 +325,13 @@
                                        <div class="photo">
                                            <img src="image/img20.png" >
                                        </div>
-                                       <div class="action-button" >
+                                       <div class="action-button" style="padding-left:16px;">
                             <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
                             <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
                                 <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
                                 <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-comment"></i></span>
-                                <span><i class="fa-solid fa-share-nodes"></i></span>
+                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black;"></i></a></span>
+                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;color:black;"></i></span>
                             </div>
                                        </div>
                                        <div class="liked-by">
@@ -295,7 +341,7 @@
                                            <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
                                        </div>
                                        <div class="caption">
-                                           <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>#lifestyle
+                                           <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
                                            </p>
                                        </div>
                                        <div class="comments text-muted">
@@ -321,13 +367,13 @@
                                                <div class="photo">
                                                    <img src="image/img19.png" >
                                                </div>
-                                               <div class="action-button" >
+                                               <div class="action-button"style="padding-left:18px;" >
                             <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
                             <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
                                 <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
                                 <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-comment"></i></span>
-                                <span><i class="fa-solid fa-share-nodes"></i></span>
+                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black;"></i></a></span>
+                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;"></i></span>
                             </div>
                                                </div>
                                                <div class="liked-by">
@@ -337,7 +383,7 @@
                                                    <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
                                                </div>
                                                <div class="caption">
-                                                   <p><b>Cabello</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>#lifestyle
+                                                   <p><b>Cabello</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
                                                    </p>
                                                </div>
                                                <div class="comments text-muted">
@@ -533,3 +579,6 @@
        <script src="css/index.js"></script>
 </body>
 </html>
+
+
+
