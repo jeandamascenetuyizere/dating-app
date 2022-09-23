@@ -1,3 +1,7 @@
+<?php
+include 'connection.php'; 
+include 'admin_session.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,9 +41,9 @@
                   <img src="image/img11.png">   
                 </div>
                 <div class="handle">
-                    <h4>Aline</h4>
+                    <h4><?php echo  $user_username; ?></h4>
                     <p class="text-muted">
-                    Karasira
+                    <?php echo  $user_email; ?>
                     </p>
                 </div>
             </a>
@@ -59,7 +63,7 @@
                 
                 </a>
                
-                <a  class="menu-item" href="index.php">
+                <a  class="menu-item" href="signout.php">
                     <span><i class="fa-solid fa-arrow-right-from-bracket"></i> </span><h3>Logout</h3>
                     </a>
                      
@@ -114,20 +118,6 @@
              </form>
              <?php 
 
-
-$sname= "localhost";
-$unmae= "root";
-$password = "";
-
-$db_name = "dating";
-
-$conn = mysqli_connect($sname, $unmae, $password, $db_name);
-
-if (!$conn) {
-	echo "Connection failed!";
-}
-
-
 //error_reporting(0);
 
 
@@ -136,7 +126,7 @@ if (isset($_POST['submit']))
   
 	$content = $_POST['content'];
 
-	$sql = "INSERT INTO data ( content) VALUES ('$content')";
+	$sql = "INSERT INTO data (content,userid) VALUES ('$content','$user_id')";
     
     if(mysqli_query($conn, $sql)){
         echo "<script>alert('your post  is successfully posted. window:location'home.php;');</script>";
@@ -148,78 +138,44 @@ if (isset($_POST['submit']))
     }
 }
 ?>
+             <!-------------- feeds -------------->
+             <div class="feeds">
+               
+             
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dating";
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
-
-$sql = "SELECT content FROM data";
+$sql = "SELECT content FROM data WHERE userid=$user_id";
 $result = mysqli_query($conn, $sql);
 echo '<h3> your Posts:</h3>'. '<br>';
 if (mysqli_num_rows($result) > 0) {
   // output data of each row
   while($row = mysqli_fetch_assoc($result)) {
   
-    echo '' . $row['content'].'<br>';
+?>     
+ <div class="feed" style="width=100;height:auto;">
+<div class="head">
+  
+   <div class="user">
+       <div class="info">
+           <h3><?php echo $user_username ?></h3>
+       </div>
+    </div>
+   <div class="caption">
+       <p><?php echo $row['content']; ?> <span class="harsh-tag"></span>
+       </p>
+   </div>
+</div>
+
+</div>
+<?php
+
   }
 }
 
 mysqli_close($conn);
 ?>
-             <!-------------- feeds -------------->
-             <div class="feeds">
-                          <!-------------- feeds1 -------------->
-                 <div class="feed" style="width=100;height:auto;">
-                     <div class="head">
-                       
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="image/img17.png" >
-                            </div>
-                            <div class="info">
-                                <h3>jean</h3>
-                                <small>Kigali, 8 minutes ago</small>
-                            </div>
-                             </div>
-                        <span class="edit">
-                        <i class="fa-solid fa-ellipsis"></i>
-                            </span>
-                        <div class="photo">
-                            <img src="image/img10.png" >
-                        </div>
-                        <div class="action-button" style="padding-left:16px;">
-                            <div class="interaction-buttons" style="width:100%; justify-content:space-between;">
-                            <span><i class="fa-solid fa-heart" style="width:15%; "></i></span>
-                                <span><i class="fa-solid fa-thumbs-up" style="width:15%;"></i></span>
-                                <span><i class="fa-solid fa-thumbs-down" style="width:15%;"></i></span>
-                                <span> <a href="chatbox.php"><i class="fa-solid fa-comment"  style="width:15%;color:black;"></i></a></span>
-                                <span><i class="fa-solid fa-share-nodes"  style="width:15%;"></i></span>
-                            </div>
-                            
-                        </div>
-                        <div class="liked-by">
-                            <span><img src="image/img17.png"></span>
-                            <span><img src="image/img15.png"></span>
-                            <span><img src="image/img16.png"></span>
-                            <p>liked by <b>Nyirarulove</b> ,<b>Mushimiyimana</b> and <b>2,339 others</b></p>
-                        </div>
-                        <div class="caption">
-                            <p><b>Jean</b>Lorem ipsum, dolor sit amet consectetur adipisicing elm. <span class="harsh-tag"></span>
-                            </p>
-                        </div>
-                        <div class="comments text-muted">
-                            view all 233 comments
-                        </div>
-                     </div>
-
-                 </div>
+             <!-------------- feeds1 -------------->
+                
                  <div class="feed">
                         <div class="head">
                            <div class="user">

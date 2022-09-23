@@ -5,18 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up form</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="CSS/style2.css">
    
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <nav>
-                <h1 style="color: rgb(10, 8, 8) ;">Dating<span style="color: #ed9b59;;">App</span></h1>
-              <ul>
-                <li><a href="about.html">About </a></li>
-                <li> <a href="contact.html">Contact</a></li> 
-                <li> <a  href="login.html">Login</a></li>  
+            <nav style="background:#feefe3;margin-left:-22vh;">
+                <h1 style="color: rgb(10, 8, 8);margin-left:20px ;">Dating<span style="color: #ed9b59;">App</span></h1>
+              <ul style="padding-left:23cm;">
+                <li ><a href="about.php" >About </a></li>
+                <li> <a href="contact.php">Contact</a></li> 
+                <li> <a  href="login.php">Login</a></li>  
             </ul>
              </nav>
         
